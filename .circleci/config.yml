@@ -1,26 +1,36 @@
 version: 2.1
+
+executors:
+  aapi:
+    machine:
+      - image: ubuntu-2004:202104-0
 jobs:
-  build:
-    # pre-built images: https://circleci.com/docs/2.0/circleci-images/
-    docker:
-      - image: circleci/node:10-browsers
+  check:
+    executor:
+      name: aapi
     steps:
-      - checkout
       - run:
-          name: The First Step
+          name: Check JAVA
           command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+            echo 'Check JAVA Version'
+            java -version
       - run:
-          name: Code Has Arrived
+          name: Check Unzip
           command: |
-            ls -al
-            echo '^^^That should look familiar^^^'
-      - run:
-          name: Running in a Unique Container
-          command: |
-            node -v
+            echo 'Check Unzip^'
+            unzip -v
       - run:
           name: Checking hostname
           command: |
             hostname
+            
+  install:
+    executor:
+      name: aapi
+    steps:
+      - checkout
+      - run:
+          name: List File
+          command: |
+            echo 'List all files'
+            ls -al
