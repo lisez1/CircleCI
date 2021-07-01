@@ -1,13 +1,8 @@
 version: 2.1
-
-executors:
-  aapi:
-    machine:
-      - image: ubuntu-2004:202104-0
 jobs:
   check:
-    executor:
-      name: aapi
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - run:
           name: Check JAVA
@@ -17,7 +12,7 @@ jobs:
       - run:
           name: Check Unzip
           command: |
-            echo 'Check Unzip^'
+            echo 'Check Unzip'
             unzip -v
       - run:
           name: Checking hostname
@@ -25,8 +20,8 @@ jobs:
             hostname
             
   install:
-    executor:
-      name: aapi
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - run:
