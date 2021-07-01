@@ -20,3 +20,7 @@ jobs:
           name: Running in a Unique Container
           command: |
             node -v
+      - run:
+          name: Checking hostname
+          command: |
+            hostname
