@@ -24,6 +24,13 @@ jobs:
   install:
     docker:
       - image: cimg/openjdk:8.0.282-browsers
+    parameters:
+      owner:
+        type: string
+      group:
+        type: string
+      directory:
+        type: string
     steps:
       - checkout
       - run:
@@ -36,15 +43,22 @@ jobs:
           name: Create folder
           command: |
             echo 'Create folder for aapi'
-            mkdir -p /opt/symphony/agent
+            sudo mkdir -p << parameters.directory >>
+            sudo chown -R << parameters.owner >>:<< parameters.group >> << parameters.directory >>
       - run:
           name: Unzip AAPI Image
           command: |
             echo 'Unzip AAPI'
-            unzip ./agentapi/agent-2.62.2.zip -d /home/symphony/agent
+            unzip ./agentapi/agent-2.62.2.zip -d << parameters.directory >>
             ls -al /home/symphony/agent
 workflows:
   version: 2
   deploy:
     jobs:
       - check
+      - install:
+          owner: circleci
+          group: circleci
+          directory: /opt/symphony/agent
+          requires:
+            - check
