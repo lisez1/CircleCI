@@ -50,7 +50,7 @@ jobs:
           command: |
             echo 'Unzip AAPI'
             unzip ./agentapi/agent-2.62.2.zip -d << parameters.directory >>
-            ls -al /home/symphony/agent
+            ls -al << parameters.directory >>
 workflows:
   version: 2
   deploy:
