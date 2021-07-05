@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   check:
     docker:
-      image: cimg/openjdk:8.0.282-browsers
+      - image: cimg/openjdk:8.0.282-browsers
     steps:
       - run:
           name: Check JAVA
@@ -20,8 +20,8 @@ jobs:
             hostname
             
   install:
-    machine:
-      image: ubuntu-2004:202010-01
+    docker:
+      - image: cimg/openjdk:8.0.282-browsers
     steps:
       - checkout
       - run:
