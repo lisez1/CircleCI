@@ -35,4 +35,6 @@ workflows:
   deploy:
     jobs:
       - check
-      - install
+      - install:
+          requires:
+            - check
