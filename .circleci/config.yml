@@ -29,3 +29,8 @@ jobs:
           command: |
             echo 'List all files'
             ls -al
+workflows:          
+  version: 2
+  deploy:
+    jobs:
+      - check
