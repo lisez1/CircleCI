@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   check:
-    machine:
-      image: ubuntu-2004:202010-01
+    docker:
+      image: cimg/openjdk:8.0.282-browsers
     steps:
       - run:
           name: Check JAVA
