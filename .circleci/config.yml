@@ -30,7 +30,18 @@ jobs:
             echo 'List all files'
             pwd
             ls -al
-workflows:          
+      - run:
+          name: Create folder
+          command: |
+            echo 'Create folder for aapi'
+            mkdir -p /opt/symphony/agent
+      - run:
+          name: Unzip AAPI Image
+          command: |
+            echo 'Unzip AAPI'
+            unzip ./agentapi/agent-2.62.2.zip -d /home/symphony/agent
+            ls -al /home/symphony/agent
+workflows:
   version: 2
   deploy:
     jobs:
