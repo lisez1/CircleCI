@@ -28,6 +28,7 @@ jobs:
           name: List File
           command: |
             echo 'List all files'
+            pwd
             ls -al
 workflows:          
   version: 2
