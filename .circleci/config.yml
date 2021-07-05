@@ -18,6 +18,8 @@ jobs:
           name: Checking hostname
           command: |
             hostname
+            df
+            id
             
   install:
     docker:
@@ -46,6 +48,3 @@ workflows:
   deploy:
     jobs:
       - check
-      - install:
-          requires:
-            - check
