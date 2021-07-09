@@ -81,6 +81,7 @@ jobs:
             echo 'Startup AAPI Process'
             cd << parameters.directory >>
             ./startup.sh &
+            ps -ef | grep java
 workflows:
   version: 2
   deploy:
