@@ -87,6 +87,7 @@ jobs:
           command: |
             echo 'Perform HealthCheck'
             sleep 30
+            ps -ef | grep java
             curl -k https://localhost:8443/agent/v3/health/extended            
 workflows:
   version: 2
