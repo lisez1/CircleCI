@@ -82,6 +82,12 @@ jobs:
             cd << parameters.directory >>
             ./startup.sh &
             ps -ef | grep java
+      - run:
+          name: PerformHealthCheck
+          command: |
+            echo 'Perform HealthCheck'
+            sleep 30
+            curl -k https://localhost:8443/agent/v3/health/extended            
 workflows:
   version: 2
   deploy:
