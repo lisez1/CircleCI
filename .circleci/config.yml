@@ -1,0 +1,105 @@
+#test
+
+version: 2.1
+jobs:
+  check:
+    docker:
+      - image: cimg/openjdk:8.0.282-browsers
+    steps:
+      - run:
+          name: Check JAVA
+          command: |
+            echo 'Check JAVA Version'
+            java -version
+      - run:
+          name: Check Unzip
+          command: |
+            echo 'Check Unzip'
+            unzip -v
+      - run:
+          name: Checking hostname
+          command: |
+            hostname
+            df
+            id
+            
+  install:
+    docker:
+      - image: cimg/openjdk:8.0.282-browsers
+    parameters:
+      owner:
+        type: string
+      group:
+        type: string
+      directory:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: List File
+          command: |
+            echo 'List all files'
+            pwd
+            ls -al
+      - run:
+          name: Create folder
+          command: |
+            echo 'Create folder for aapi'
+            sudo mkdir -p << parameters.directory >>
+            sudo chown -R << parameters.owner >>:<< parameters.group >> << parameters.directory >>
+      - run:
+          name: Unzip AAPI Image
+          command: |
+            echo 'Unzip AAPI'
+            unzip ./agentapi/agent-2.62.2.zip -d << parameters.directory >>
+            ls -al << parameters.directory >>
+      - run:
+          name: Setup Configuration Files
+          command: |
+            echo 'Copy agent.yml file'
+            cp -p ./agentapi/agent.yml << parameters.directory >>
+            echo 'Copy start.sh file'
+            cp -p ./agentapi/startup.sh << parameters.directory >>
+            chmod 755 << parameters.directory >>/startup.sh
+      - run:
+          name: Create folders
+          command: |
+            echo 'Create cert folder'
+            mkdir << parameters.directory >>/cert
+            echo 'Create temp folder'
+            mkdir << parameters.directory >>/temp
+      - run:
+          name: Setup Certification Files
+          command: |
+            echo 'Copy keystore file'
+            cp -p ./agentapi/keystore << parameters.directory >>/cert
+            echo 'Copy truststore file'
+            cp -p ./agentapi/truststore << parameters.directory >>/cert
+            echo 'Copy Privatekey file'
+            cp -p ./agentapi/privatekey.pem << parameters.directory >>/cert
+      - run:
+          name: Startup AAPI
+          command: |
+            echo 'Startup AAPI Process'
+            cd << parameters.directory >>
+            nohup ./startup.sh &
+            sleep 10
+            ps -ef | grep java
+      - run:
+          name: PerformHealthCheck
+          command: |
+            echo 'Perform HealthCheck'
+            sleep 30
+            ps -ef | grep java
+            curl -k https://localhost:8443/agent/v3/health/extended            
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - check
+      - install:
+          owner: circleci
+          group: circleci
+          directory: /opt/symphony/agent
+          requires:
+            - check
