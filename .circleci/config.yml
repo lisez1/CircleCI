@@ -62,10 +62,12 @@ jobs:
             cp -p ./agentapi/startup.sh << parameters.directory >>
             chmod 755 << parameters.directory >>/startup.sh
       - run:
-          name: Create cert folder
+          name: Create folders
           command: |
             echo 'Create cert folder'
             mkdir << parameters.directory >>/cert
+            echo 'Create temp folder'
+            mkdir << parameters.directory >>/temp
       - run:
           name: Setup Certification Files
           command: |
@@ -80,7 +82,8 @@ jobs:
           command: |
             echo 'Startup AAPI Process'
             cd << parameters.directory >>
-            ./startup.sh &
+            nohup ./startup.sh &
+            sleep 10
             ps -ef | grep java
       - run:
           name: PerformHealthCheck
