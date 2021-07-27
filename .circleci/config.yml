@@ -98,6 +98,10 @@ workflows:
     jobs:
       - check
       - install:
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
           owner: circleci
           group: circleci
           directory: /opt/symphony/agent
