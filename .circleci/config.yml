@@ -141,12 +141,11 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - check
+      - check:
           filters:
             branches:
-              only:
-                - aapi
-                - keymanager
+              ignore:
+                - master
       - install_km:
           filters:
             branches:
