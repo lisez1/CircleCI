@@ -77,6 +77,7 @@ jobs:
             cp -p ./agentapi/truststore << parameters.directory >>/cert
             echo 'Copy Privatekey file'
             cp -p ./agentapi/privatekey.pem << parameters.directory >>/cert
+<<<<<<< HEAD
       - run:
           name: Startup AAPI
           command: |
@@ -92,12 +93,21 @@ jobs:
             sleep 30
             ps -ef | grep java
             curl -k https://localhost:8443/agent/v3/health/extended            
+=======
+>>>>>>> circleci-project-setup
 workflows:
   version: 2
   deploy:
     jobs:
       - check
       - install:
+<<<<<<< HEAD
+=======
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+>>>>>>> circleci-project-setup
           owner: circleci
           group: circleci
           directory: /opt/symphony/agent
