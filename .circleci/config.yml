@@ -87,7 +87,7 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - aapi
           owner: circleci
           group: circleci
           directory: /opt/symphony/agent
