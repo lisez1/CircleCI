@@ -51,7 +51,9 @@ jobs:
           name: Unzip KeyManager Image
           command: |
             echo 'Unzip KeyManager'
-            tar zxvf ./keymanager/symphony-external-relay-centos-20.12.2_1.8-105.x86_64.tar.gz -C << parameters.directory >>
+            tar zxvf ./keymanager/symphony-external-relay-centos-20.12.2_1.8-105.x86_64.tar.gz
+            ls -al ./keymanager/symphony-external-relay-centos-20.12.2_1.8-105.x86_64
+            cp -Rp ./keymanager/symphony-external-relay-centos-20.12.2_1.8-105.x86_64/* << parameters.directory >>
             ls -al << parameters.directory >>
       - run:
           name: Setup Configuration Files
