@@ -77,21 +77,6 @@ jobs:
             cp -p ./agentapi/truststore << parameters.directory >>/cert
             echo 'Copy Privatekey file'
             cp -p ./agentapi/privatekey.pem << parameters.directory >>/cert
-      - run:
-          name: Startup AAPI
-          command: |
-            echo 'Startup AAPI Process'
-            cd << parameters.directory >>
-            nohup ./startup.sh &
-            sleep 10
-            ps -ef | grep java
-      - run:
-          name: PerformHealthCheck
-          command: |
-            echo 'Perform HealthCheck'
-            sleep 30
-            ps -ef | grep java
-            curl -k https://localhost:8443/agent/v3/health/extended            
 workflows:
   version: 2
   deploy:
