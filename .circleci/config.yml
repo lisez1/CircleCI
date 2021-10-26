@@ -26,8 +26,8 @@ jobs:
             docker stop $(docker ps -a | grep 20.12.2 | awk '{print $1}')
             docker logs $(docker ps -a | grep 20.12.2 | awk '{print $1}')
             docker volume ls
-            ls -l /var/lib/docker/volumes/symphony_config/_data
-            ls -l /var/lib/docker/volumes/symphony_log/_data
+            sudo ls -l /var/lib/docker/volumes/symphony_config/_data
+            sudo ls -l /var/lib/docker/volumes/symphony_log/_data
 
 workflows:
   version: 2
