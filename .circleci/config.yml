@@ -16,18 +16,18 @@ jobs:
       - run:
           name: Download KeyManager Docker
           command: |
-          docker volume create symphony_config
-          docker volume create symphony_logs
-          docker login docker.symphony.com -u symphony -p '$i64'
-          docker run -d --name key-manger_20.12.2 -p 8443:8443 -p 8444:8444 -v symphony_config:/opt/symphony/config -v symphony_logs:/opt/symphony/logs -e TZ=Japan docker.symphony.com/symphony/key-manager:20.12.2
+            docker volume create symphony_config
+            docker volume create symphony_logs
+            docker login docker.symphony.com -u symphony -p '$i64'
+            docker run -d --name key-manger_20.12.2 -p 8443:8443 -p 8444:8444 -v symphony_config:/opt/symphony/config -v symphony_logs:/opt/symphony/logs -e TZ=Japan docker.symphony.com/symphony/key-manager:20.12.2
       - run:
           name: Setup Directories
           command: |
-          docker stop $(docker ps -a | grep 20.12.2 | awk '{print $1}')
-          docker logs $(docker ps -a | grep 20.12.2 | awk '{print $1}')
-          docker volume ls
-          ls -l /var/lib/docker/volumes/symphony_config/_data
-          ls -l /var/lib/docker/volumes/symphony_log/_data          
+            docker stop $(docker ps -a | grep 20.12.2 | awk '{print $1}')
+            docker logs $(docker ps -a | grep 20.12.2 | awk '{print $1}')
+            docker volume ls
+            ls -l /var/lib/docker/volumes/symphony_config/_data
+            ls -l /var/lib/docker/volumes/symphony_log/_data
 
 workflows:
   version: 2
