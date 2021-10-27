@@ -27,7 +27,7 @@ jobs:
             docker logs $(docker ps -a | grep 20.12.2 | awk '{print $1}')
             docker volume ls
             sudo ls -l /var/lib/docker/volumes/symphony_config/_data
-            sudo ls -l /var/lib/docker/volumes/symphony_log/_data
+            sudo ls -l /var/lib/docker/volumes/symphony_logs/_data
 
 workflows:
   version: 2
