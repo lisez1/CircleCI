@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-KEYMANAGER_HOME="/opt/symphony/keymanager"
+KEYMANAGER_HOME="/opt/keymanager"
 LOG_DIR="${KEYMANAGER_HOME}/logs"
-JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.201.b09-2.el7_6.x86_64/jre"
+JAVA_HOME="root@ip-172-28-82-19:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre"
 KEYMANAGER_OPTS="-server -Xms5048m -Xmx5048m \
 -Djava.io.tmpdir=$KEYMANAGER_HOME/temp \
 -Djava.library.path=$KEYMANAGER_HOME/native/ \
@@ -23,7 +23,7 @@ KEYMANAGER_OPTS="-server -Xms5048m -Xmx5048m \
 -Daccess.control.allow.origin=symphony.com,isidsymphony.com \
 -Dsession.cookie.domain=.isidsymphony.com \
 -Djavax.net.ssl.keyStore=$KEYMANAGER_HOME/certs/keystore \
--Djavax.net.ssl.trustStore=$KEYMANAGER_HOME/certs/truststore \
+-Djavax.net.ssl.trustStore=$KEYMANAGER_HOME/certs/tomcat.truststore \
 -Dreceiver.pool.size=16 \
 -Duser.timezone=Asia/Tokyo \
 -Dhost.name=keymanager01.isidsymphony.com"

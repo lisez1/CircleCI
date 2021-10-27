@@ -5,6 +5,9 @@ jobs:
   build:
     machine: true
     working_directory: ~/my_app
+    parameters:
+      jck_file:
+        type: string
     steps:
       - checkout
       - run:
@@ -26,8 +29,22 @@ jobs:
             docker stop $(docker ps -a | grep 20.12.2 | awk '{print $1}')
             docker logs $(docker ps -a | grep 20.12.2 | awk '{print $1}')
             docker volume ls
-            sudo ls -l /var/lib/docker/volumes/symphony_config/_data
-            sudo ls -l /var/lib/docker/volumes/symphony_logs/_data
+            sudo su -
+            ls -l /var/lib/docker/volumes/symphony_config/_data
+            ls -l /var/lib/docker/volumes/symphony_logs/_data
+      - run:
+          name: Setup Configuration Files
+          command: |
+            cp /home/circleci/my_app/keymanager/<< parameters.jck_file >> /var/lib/docker/volumes/symphony_config/_data/customer.jck
+            cp /home/circleci/my_app/keymanager/keymanager_config.json /var/lib/docker/volumes/symphony_config/_data/keymanager_config.json
+            cp /home/circleci/my_app/keymanager/keymanager.properties /var/lib/docker/volumes/symphony_config/_data/keymanager.properties
+            cp /home/circleci/my_app/keymanager/environment.sh /var/lib/docker/volumes/symphony_config/_data/environment.sh
+            cp /home/circleci/my_app/keymanager/keystore /var/lib/docker/volumes/symphony_config/_data/keystore
+            cp /home/circleci/my_app/keymanager/truststore /var/lib/docker/volumes/symphony_config/_data/tomcat.truststore
+            docker volume ls
+            sudo su -
+            ls -l /var/lib/docker/volumes/symphony_config/_data
+            ls -l /var/lib/docker/volumes/symphony_logs/_data 
 
 workflows:
   version: 2
