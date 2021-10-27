@@ -55,3 +55,4 @@ workflows:
             branches:
               only:
                 - docker
+          jck_file: isid-na-prod-chat-glb-1-hsm.jck
